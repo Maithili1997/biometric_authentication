@@ -1,14 +1,9 @@
-
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
-
 import '../app_pages.dart';
 
-
-
 class BiometricController extends GetxController {
-
   final LocalAuthentication auth = LocalAuthentication();
   var isAuthenticated = false.obs;
   var failedAttempts = 0;
@@ -16,12 +11,12 @@ class BiometricController extends GetxController {
   Future<void> authenticate() async {
     bool isDeviceSupported = await auth.isDeviceSupported();
     bool canCheckBiometrics = await auth.canCheckBiometrics;
-    final List<BiometricType> availableBiometrics = await auth.getAvailableBiometrics();
+    final List<BiometricType> availableBiometrics = await auth
+        .getAvailableBiometrics();
 
     try {
       if (!isDeviceSupported) {
         Get.snackbar('Error', 'Device authentication not supported');
-      //  showFallback();
         return;
       }
 
@@ -31,26 +26,16 @@ class BiometricController extends GetxController {
           snackPosition: SnackPosition.TOP,
           'Info',
           'Authenticating using biometrics...',
-          // mainButton: TextButton(
-          //   style: TextButton.styleFrom(backgroundColor: Colors.indigo),
-          //   onPressed: () {
-          //     AppSettings.openAppSettings(type: AppSettingsType.generalSettings);
-          //   },
-          //   child: const Text('Open Settings', style: TextStyle(color: Colors.white)),
-          // )
-
         );
         didAuthenticate = await auth.authenticate(
           localizedReason:
-          'Authenticate to continue using biometrics or device credentials.',
+              'Authenticate to continue using\nbiometrics or device credentials.',
           options: const AuthenticationOptions(
-            biometricOnly: false, // allows system PIN/pattern fallback
+            biometricOnly: false,
             stickyAuth: true,
             useErrorDialogs: true,
           ),
         );
-      //  showFallback();
-       // return;
       } else {
         Get.snackbar(
           'Fallback',
@@ -60,31 +45,14 @@ class BiometricController extends GetxController {
 
         didAuthenticate = await auth.authenticate(
           localizedReason:
-          'Authenticate using your device PIN, pattern, or password.',
+              'Authenticate using your device PIN, pattern, or password.',
           options: const AuthenticationOptions(
-            biometricOnly: false, // direct system fallback
+            biometricOnly: false,
             stickyAuth: true,
             useErrorDialogs: true,
           ),
         );
-      // if(availableBiometrics.contains(BiometricType.face)){
-      //   Get.snackbar('Info', 'Face ID available — look at your device to authenticate');
-      //  // showFallback();
-      // }else if (availableBiometrics.contains(BiometricType.fingerprint)) {
-      //   Get.snackbar('Info', 'Fingerprint available — touch the sensor to authenticate');
-      // //  showFallback();
       }
-
-
-      // final bool didAuthenticate = await auth.authenticate(
-      //   localizedReason: 'Please authenticate using your fingerprint or face',
-      //   options: const AuthenticationOptions(
-      //     biometricOnly: true,
-      //     stickyAuth: true,
-      //   ),
-      // );
-
-
       if (didAuthenticate) {
         isAuthenticated.value = true;
         failedAttempts = 0;
@@ -101,7 +69,7 @@ class BiometricController extends GetxController {
           );
           await auth.authenticate(
             localizedReason:
-            'Authenticate using your device PIN, pattern, or password.',
+                'Authenticate using your device PIN, pattern, or password.',
             options: const AuthenticationOptions(
               biometricOnly: false,
               stickyAuth: true,
@@ -109,24 +77,21 @@ class BiometricController extends GetxController {
             ),
           );
           failedAttempts = 0;
-         // showFallback();
+          // showFallback();
         }
       }
-
     } on PlatformException catch (e) {
       Get.snackbar('Error', e.message ?? 'Something went wrong');
       await systemFallback();
-    //  showFallback();
-      }
-
+      //  showFallback();
+    }
   }
-
 
   Future<void> systemFallback() async {
     try {
       await auth.authenticate(
         localizedReason:
-        'Authenticate using your device PIN, pattern, or password.',
+            'Authenticate using your device PIN, pattern, or password.',
         options: const AuthenticationOptions(
           biometricOnly: false,
           stickyAuth: true,
@@ -137,9 +102,4 @@ class BiometricController extends GetxController {
       Get.snackbar('Error', 'Unable to open system authentication screen.');
     }
   }
-
 }
-
-
-
-

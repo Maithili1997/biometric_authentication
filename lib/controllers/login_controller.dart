@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:biometric_authentication/screens/dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -12,11 +13,15 @@ class LoginController extends GetxController {
     final url = Uri.parse('https://reqres.in/api/login');
     final response = await http.post(
       url,
-      body: {'email': emailController.value, 'password': passwordController.value},
+      headers: {
+        'x-api-key': 'reqres-free-v1',
+      },
+      body: {'email': emailController.value.text, 'password': passwordController.value.text},
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      Get.offAll(DashboardScreenPage());
       return data.containsKey('token');
     } else {
       return false;
