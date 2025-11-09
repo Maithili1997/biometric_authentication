@@ -1,9 +1,9 @@
 import 'dart:convert';
-
-import 'package:biometric_authentication/screens/dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../screens/dashboard_screen.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController(text: 'eve.holt@reqres.in').obs;

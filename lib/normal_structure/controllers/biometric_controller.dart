@@ -1,7 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
-import '../app_pages.dart';
+import '../../app_pages.dart';
+
 
 class BiometricController extends GetxController {
   final LocalAuthentication auth = LocalAuthentication();
@@ -57,7 +58,7 @@ class BiometricController extends GetxController {
         isAuthenticated.value = true;
         failedAttempts = 0;
         Get.snackbar('Success', 'Authentication successful!');
-        Get.offAllNamed(Routes.DASHBOARD);
+        Get.offAllNamed(Routes.dashboard);
       } else {
         failedAttempts++;
         Get.snackbar('Failed', 'Authentication failed ($failedAttempts/3)');
@@ -77,13 +78,11 @@ class BiometricController extends GetxController {
             ),
           );
           failedAttempts = 0;
-          // showFallback();
         }
       }
     } on PlatformException catch (e) {
       Get.snackbar('Error', e.message ?? 'Something went wrong');
       await systemFallback();
-      //  showFallback();
     }
   }
 

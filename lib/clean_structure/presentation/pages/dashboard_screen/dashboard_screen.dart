@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DashboardScreenPage extends StatefulWidget {
-  const DashboardScreenPage({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreenPage> createState() => _DashboardScreenPageState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenPageState extends State<DashboardScreenPage> {
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +20,8 @@ class _DashboardScreenPageState extends State<DashboardScreenPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Text("Coming Soon...",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 18),)
-        ],),
+            Text("Coming Soon...",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 18),)
+          ],),
       )),
     );
 

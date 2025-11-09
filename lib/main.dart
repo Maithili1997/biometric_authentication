@@ -1,9 +1,8 @@
-import 'package:biometric_authentication/screens/biometric_screen.dart';
-import 'package:biometric_authentication/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'clean_structure/core/routes/app_pages.dart';
+import 'clean_structure/presentation/pages/login/login_screen.dart';
 
-import 'app_pages.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,9 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      initialRoute: Routes.LOGIN,
+      initialRoute: Routes.loginPage,
       getPages: AppPages.routes,
-      home: const LoginScreenPage(),
+      home: const LoginScreen(),
     );
   }
 }
